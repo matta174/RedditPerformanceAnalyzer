@@ -2,6 +2,7 @@ import praw
 import json
 import uuid
 import sqlite3
+import submission_data
 
 #Instantiates the reddit instance
 reddit = praw.Reddit('bot1',user_agent='bot1 user agent')
@@ -51,3 +52,4 @@ def insert_submission_into_db(submissionID, SubmissionName, BatchID):
 
 collect_submission_ids()
 lookup_specific_submission()
+

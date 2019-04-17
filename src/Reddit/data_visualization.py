@@ -1,16 +1,23 @@
 import pygal
-
+import database_interactions, submission_data
 
 # bar_chart = pygal.Bar()                                            # Create a bar graph object
 # bar_chart.add('Fibonacci', [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55])  # Add some values
 # bar_chart.render_to_file('src\\Data\\bar_chart.svg')               # Save the svg to a file
 
+test_batchid = database_interactions.select_submissions_by_batchId_from_db('446bd82f-5e48-4768-a044-192408a60461')
+votecountlist = list()
+for submission in test_batchid:
+    submissionID = submission[0]
+    submission = submission_data.submission_by_id(submission[0])
+    votecount = submission.score
+    votecountlist.insert(0,[submissionID,votecount])
 
 def create_bar_chart():
     b_chart = pygal.Bar()
     b_chart.title = "Matt's test bchart"
-    b_chart.add("test column", [.84])
-    b_chart.add('test column',[.4])
+    for item in votecountlist:
+        b_chart.add(item[0],item[1])
     b_chart.render_in_browser()
 
 
@@ -25,4 +32,5 @@ def create_radar_chart():
     radar_chart.render_in_browser()
 
 
-create_radar_chart()
+
+create_bar_chart()

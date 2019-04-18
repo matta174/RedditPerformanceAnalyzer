@@ -1,7 +1,8 @@
 import praw
 import json
 import uuid
-import submission_data, database_interactions
+from Reddit import submission_data, database_interactions
+import datetime as dt
 
 #Instantiates the reddit instance
 reddit = praw.Reddit('bot1',user_agent='bot1 user agent')
@@ -13,9 +14,12 @@ reddit = praw.Reddit('bot1',user_agent='bot1 user agent')
 def collect_submission_ids(designated_subreddit = 'all'):
     batchid = str(uuid.uuid4())
     
-    for submission in reddit.subreddit(designated_subreddit).new(limit=25):        
-        database_interactions.insert_submission_into_db(submission.id,submission.title,batchid)
+    for submission in reddit.subreddit(designated_subreddit).new(limit=25):
+        submission.created = get_date(submission.created)            
+        database_interactions.insert_submission_into_db(submission.id,submission.title,batchid,submission.created)
         submission_data.set_submission(submission.id)
 
 
 
+def get_date(created):
+        return dt.datetime.fromtimestamp(created)

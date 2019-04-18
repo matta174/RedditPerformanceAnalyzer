@@ -1,4 +1,4 @@
-import data_collection
+from Reddit import data_collection
 import praw
 
 reddit = praw.Reddit('bot1',user_agent='bot1 user agent')
@@ -7,7 +7,7 @@ submission_dict = {}
 def submission_by_id(sub_id):   #creates the object based on the submission id given
     submission = reddit.submission(id = sub_id)
     return submission
-test = submission_by_id('bdo7ie')
+
 def get_submission_dict():
     return submission_dict
 
@@ -53,3 +53,7 @@ def get_ratio(sub_id):
 def get_link(sub_id):
     submission = submission_by_id(sub_id)
     return submission.url
+
+def is_adult(sub_id):
+    submission = submission_by_id(sub_id)
+    return submission.over_18

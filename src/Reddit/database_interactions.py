@@ -1,13 +1,13 @@
 import sqlite3
 
 
-def insert_submission_into_db(submissionID, SubmissionName, BatchID):
+def insert_submission_into_db(submissionID, SubmissionName, BatchID,created):
         try:
                 conn = sqlite3.connect('src\\Data\\submissions.db')
-                sql = ''' INSERT INTO submissions(SubmissionID, SubmissionName, BatchId)
-                          Values(?,?,?) '''
+                sql = ''' INSERT INTO submissions(SubmissionID, SubmissionName, BatchId, create_datetime)
+                          Values(?,?,?,?) '''
                 cur = conn.cursor()
-                cur.execute(sql,(submissionID,SubmissionName,BatchID))
+                cur.execute(sql,(submissionID,SubmissionName,BatchID,created))
                 conn.commit()
                 return cur.lastrowid
         except Exception as e:

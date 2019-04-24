@@ -1,4 +1,4 @@
-from Reddit import data_collection
+from Reddit import data_collection, database_interactions
 import praw
 
 reddit = praw.Reddit('bot1',user_agent='bot1 user agent')
@@ -57,3 +57,11 @@ def get_link(sub_id):
 def is_adult(sub_id):
     submission = submission_by_id(sub_id)
     return submission.over_18
+
+def get_batch_score(batchID):
+        batch_score = 0
+        batch = database_interactions.select_submissions_by_batchId_from_db(batchID[0])
+        for submission in batch:
+            batch_score += get_score(submission[0])
+        return batch_score
+

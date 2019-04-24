@@ -36,3 +36,16 @@ def select_submissions_by_batchId_from_db(batchId):
                 return rows
         except Exception as e:
                 print(e)        
+
+def get_all_batchIds_from_db():
+        try:
+                conn = sqlite3.connect('src\\Data\\submissions.db')
+                sql = "select DISTINCT BatchId from submissions"
+                cur = conn.cursor()
+                cur.execute(sql)
+                conn.commit()
+                rows = cur.fetchall()
+                final_result = [list(i) for  i in rows]
+                return final_result
+        except Exception as e:
+                print(e)        

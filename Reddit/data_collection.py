@@ -14,7 +14,8 @@ reddit = praw.Reddit('bot1',user_agent='bot1 user agent')
 def collect_submission_ids(designated_subreddit = 'all', sortBy = 'new', lim = 25):
 	batchid = str(uuid.uuid4())
 	
-	for submission in reddit.subreddit(designated_subreddit).sortBy(limit = lim):
+
+	for submission in sorter(sortBy, designated_subreddit, lim):
 		submission.created = submission.created            
 		database_interactions.insert_submission_into_db(submission.id,submission.title,batchid,submission.created)
 		submission_data.set_submission(submission.id)    
@@ -22,3 +23,12 @@ def collect_submission_ids(designated_subreddit = 'all', sortBy = 'new', lim = 2
 def get_date(created):
     return dt.datetime.fromtimestamp(created)
 
+def sorter(sort, sub, lim):
+	sorter ={
+		'hot': reddit.subreddit(sub).hot(limit = lim),
+		'top': reddit.subreddit(sub).top(limit = lim),
+		'controversial': reddit.subreddit(sub).controversial(limit = lim),
+		'rising': reddit.subreddit(sub).rising(limit = lim),
+		'new': reddit.subreddit(sub).new(limit = lim)
+	}
+	return (sorter[sort])

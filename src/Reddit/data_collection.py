@@ -11,15 +11,13 @@ reddit = praw.Reddit('bot1',user_agent='bot1 user agent')
 # Returns 25 new posts from a designated subreddit
 # If no subreddit is designated it retrieves from all
 # Submission title, id, and created unix time are saved in posts_storage.json
-def collect_submission_ids(designated_subreddit = 'all'):
+def collect_submission_ids(designated_subreddit = 'all', type = 'new'):
     batchid = str(uuid.uuid4())
     
     for submission in reddit.subreddit(designated_subreddit).new(limit=25):
-        submission.created = get_date(submission.created)            
+        submission.created = submission.created            
         database_interactions.insert_submission_into_db(submission.id,submission.title,batchid,submission.created)
         submission_data.set_submission(submission.id)
-
-    return batchid
 
 
 

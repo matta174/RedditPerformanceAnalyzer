@@ -27,7 +27,5 @@ class scheduler:
                 #code for after check complete logic
                 #switch for job type
 
-
-
         except Exception as e:
                 print(e)

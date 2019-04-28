@@ -49,3 +49,18 @@ def get_all_batchIds_from_db():
                 return final_result
         except Exception as e:
                 print(e)        
+
+
+def insert_multiple_submissions_into_db(values):
+        try:
+                conn = sqlite3.connect('src\\Data\\submissions.db')
+                cur = conn.cursor()
+                values_to_use = values
+                # sql = ''' INSERT INTO submissions(SubmissionID, SubmissionName, BatchId, create_datetime)
+                #           Values(?,?,?,?) '''
+                cur.executemany("INSERT INTO submissions(SubmissionID, SubmissionName, BatchId, create_datetime) VALUES(?,?,?,?)", (values_to_use))
+                #cur.execute(sql,(submissionID,SubmissionName,BatchID,created))
+                conn.commit()
+                return cur.lastrowid
+        except Exception as e:
+                print(e)

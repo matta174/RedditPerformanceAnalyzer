@@ -1,5 +1,5 @@
 import sqlite3
-
+import re
 
 def insert_submission_into_db(submissionID, SubmissionName, BatchID,created):
         try:
@@ -56,20 +56,10 @@ def insert_multiple_submissions_into_db(values):
                 conn = sqlite3.connect('src\\Data\\submissions.db')
                 cur = conn.cursor()
                 values_list = list()
-                batchId_list = list()
-                id_list = list()
-                submission_created_list = list()
-                title_list = list()
-                mylastlist = []
                 for value in values.values():
-                        values_list.insert(count,value)
-                        batchId_list.append(str(value.get('batchId')))
-                        id_list.append(str(value.get('id')))
-                        submission_created_list.append(str(value.get('submission_created')))
-                        title_list.append(str(value.get('title')))
-                data = [(batchId_list,id_list,submission_created_list,title_list)]
-                mylastlist.append([id_list,title_list,batchId_list,submission_created_list])
-                cur.executemany("INSERT INTO submissions(SubmissionID, SubmissionName, BatchId, create_datetime) VALUES(?,?,?,?)",[id_list,title_list,batchId_list,submission_created_list])
+                        values_list.append(([str(value.get('id')),str(value.get('title')),str(value.get('batchId')), str(value.get('submission_created'))] ))
+
+                cur.executemany("INSERT INTO submissions(SubmissionID, SubmissionName, BatchId, create_datetime) VALUES(?,?,?,?)",values_list)
                 conn.commit()
                 return cur.lastrowid
         except Exception as e:

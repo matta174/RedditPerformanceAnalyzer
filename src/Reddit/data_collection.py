@@ -18,6 +18,7 @@ def collect_submission_ids(designated_subreddit = 'all', sortBy = 'new', lim = 2
             set_submission(submission.id,submission.title,batchid,submission.created)
         
     #database_interactions.insert_submission_into_db(submission.id,submission.title,batchid,submission.created)
+    flatten(submission_dict)
     database_interactions.insert_multiple_submissions_into_db(submission_dict)
 def get_date(created):
         return dt.datetime.fromtimestamp(created)
@@ -48,4 +49,18 @@ def set_submission(sub_id, sub_title, batchId,submission_created):
     submission_dict[sub_id]['id']=sub_id
     submission_dict[sub_id]['title']=sub_title
     submission_dict[sub_id]["batchId"]=batchId
-    submission_dict[sub_id]['submission_created']=submission_created
+    submission_dict[sub_id]['submission_created']=str(submission_created)
+
+
+def flatten(d):
+    out = {}
+    for key, val in d.items():
+        if isinstance(val, dict):
+            val = [val]
+        if isinstance(val, list):
+            for subdict in val:
+                deeper = flatten(subdict).items()
+                out.update({key + '_' + key2: val2 for key2, val2 in deeper})
+        else:
+            out[key] = val
+    return out

@@ -1,5 +1,4 @@
 import sqlite3
-import re
 
 def insert_submission_into_db(submissionID, SubmissionName, BatchID,created):
         try:

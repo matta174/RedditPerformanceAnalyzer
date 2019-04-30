@@ -8,8 +8,6 @@ from Reddit import data_collection, submission_data, database_interactions, sche
 def main():
     x = True
     while x:
-        #data_collection.fast_submissions_grab()
-        check_queue = schedule.scheduler()
         p = Process(target= data_collection.collect_submission_ids())
         p2 = Process(target = check_queue.check_queue())
         p2.start()

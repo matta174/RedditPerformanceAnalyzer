@@ -15,6 +15,11 @@ class scheduler:
                 print(e)
 
 
+	# Status codes:
+	# 0 = In Queue
+	# 1 = In progress
+	# 2 = Complete
+	# 3 = Error / Misc
     def check_queue(self,test =  'test'):
         try:
                 conn = sqlite3.connect('src\\Data\\submissions.db')
@@ -27,5 +32,18 @@ class scheduler:
                 #code for after check complete logic
                 #switch for job type
 
+
         except Exception as e:
                 print(e)
+
+    
+    def update_queue(self, id, status):
+        try:
+                conn = sqlite3.connect('src\\Data\\submissions.db')
+                sql = ''' update process_queue SET status = ? WHERE id = ?'''
+                cur = conn.cursor()
+                cur.execute(sql,(status,id))
+                conn.commit()
+                return cur.lastrowid
+        except Exception as e:
+            print(e)

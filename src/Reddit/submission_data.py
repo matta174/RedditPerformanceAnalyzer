@@ -65,3 +65,9 @@ def get_batch_score(batchID):
             batch_score += get_score(submission[0])
         return batch_score
 
+def get_batch_data(batchData):
+    returned_data = []
+    for submission in batchData:
+        current_submission = submission_by_id(submission[0])
+        returned_data.append(str(current_submission.id) + '|' + str(current_submission.score) +'|'+ str(current_submission.upvote_ratio) + '|' + str(current_submission.num_comments) + '|' + str(current_submission.total_awards_received) )
+    return returned_data

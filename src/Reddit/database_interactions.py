@@ -10,7 +10,21 @@ def insert_submission_into_db(submissionID, SubmissionName, BatchID,created):
                 conn.commit()
                 return cur.lastrowid
         except Exception as e:
+                conn.close()   
                 print(e)
+
+def insert_submission_into_submission_data(submissionID, BatchID,created):
+        try:
+                conn = sqlite3.connect('src\\Data\\submissions.db')
+                sql = ''' INSERT INTO submission_data(SubmissionID, BatchId, created)
+                          Values(?,?,?) '''
+                cur = conn.cursor()
+                cur.execute(sql,(submissionID,BatchID,created))
+                conn.commit()
+                return cur.lastrowid
+        except Exception as e:
+                conn.close()   
+                print(e)        
 
 def select_submission_from_db(submissionID):
         try:
@@ -22,6 +36,7 @@ def select_submission_from_db(submissionID):
                 rows = cur.fetchall()
                 return rows
         except Exception as e:
+                conn.close()   
                 print(e)
 
 def select_submissions_by_batchId_from_db(batchId):
@@ -34,6 +49,7 @@ def select_submissions_by_batchId_from_db(batchId):
                 rows = cur.fetchall()
                 return rows
         except Exception as e:
+                conn.close()   
                 print(e)        
 
 def get_all_batchIds_from_db():
@@ -47,6 +63,7 @@ def get_all_batchIds_from_db():
                 final_result = [list(i) for  i in rows]
                 return final_result
         except Exception as e:
+                conn.close()   
                 print(e)        
 
 
@@ -62,4 +79,41 @@ def insert_multiple_submissions_into_db(values):
                 conn.commit()
                 return cur.lastrowid
         except Exception as e:
+                conn.close()                
                 print(e)
+
+
+
+def insert_multiple_submissions_into_submission_data(values):
+        try:
+                conn = sqlite3.connect('src\\Data\\submissions.db')
+                cur = conn.cursor()
+                values_list = list()
+                for value in values.values():
+                        values_list.append(( [str(value.get('id')),str(value.get('batchId')), str(value.get('submission_created'))] ))
+
+                cur.executemany("INSERT INTO submission_data(SubmissionID, BatchId, created) VALUES(?,?,?)",values_list)
+                conn.commit()
+                return cur.lastrowid
+        except Exception as e:
+                conn.close()                
+                print(e)
+
+
+def update_value_in_submission_data(hour,values):
+        try:
+                conn = sqlite3.connect('src\\Data\\submissions.db')
+                cur = conn.cursor()
+                values_list = list()
+
+                for value in values:
+                        temp = value.split('|')
+                        submissionId = temp[0]
+                        values_list.append(([value,submissionId]))
+
+                cur.executemany("update submission_data set \"" + hour +"\" = ? where submissionId = ? ",values_list)
+                conn.commit()
+                return cur.lastrowid
+        except Exception as e:
+                conn.close()
+                print(e)        

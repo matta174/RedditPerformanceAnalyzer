@@ -17,6 +17,7 @@ def collect_submission_ids(designated_subreddit = 'all', sortBy = 'new', lim = 1
     for submission in sorter(designated_subreddit, sortBy, lim):
             set_submission(submission.id,submission.title,batchid,submission.created)
     database_interactions.insert_multiple_submissions_into_db(submission_dict)
+    database_interactions.insert_multiple_submissions_into_submission_data(submission_dict)
 def get_date(created):
         return dt.datetime.fromtimestamp(created)
 
@@ -30,12 +31,6 @@ def sorter(sub, sort, lim):
 		'top': reddit.subreddit(sub).top(limit=lim)
         }
 	return sorter[sort]
-
-
-def fast_submissions_grab():
-        for submission in reddit.subreddit('all').new(limit = 25):
-                print(submission.title)
-
 
 
 def get_submission_dict():

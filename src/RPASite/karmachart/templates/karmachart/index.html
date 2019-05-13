@@ -2,8 +2,7 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'karmachart/style.css' %}">
 
-<input type="button" onclick="window.location.href='collect_data.html'" value="Collect Data">
-<input type="button" onclick="window.location.href='clear_session.html'" value="Clear Session">
 
-Hello world!
-My name is Matthew
+<button onclick="location.href='{% url 'karmachart:collect_data' %}'">Collect Data</button>
+
+

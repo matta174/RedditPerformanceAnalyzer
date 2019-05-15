@@ -3,6 +3,14 @@
 <link rel="stylesheet" type="text/css" href="{% static 'karmachart/style.css' %}">
 
 
+<div class="container">
+<form method = "post">
+    {% csrf_token %} 
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+</div>
 <button onclick="location.href='{% url 'karmachart:collect_data' %}'">Collect Data</button>
+
 
 

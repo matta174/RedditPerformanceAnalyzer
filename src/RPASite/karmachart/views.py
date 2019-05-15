@@ -8,15 +8,34 @@ from .forms import NameForm, HomeForm
 import Reddit.data_collection
 
 
-def collect_data(request):
-
-    Reddit.data_collection.collect_submission_ids('flying', 'top',5)
-    return render(request,'karmachart/index.html')
-
-
-
 class IndexView(generic.ListView):
     template_name = 'karmachart/index.html'
+    batchids = Reddit.data_collection.database_interactions.get_all_batchIds_from_db()
+
+    def get_queryset(self):
+        """Return the last five published questions."""
+        return 'testing'
+    
+
+    def get_batch_ids(self, request):
+        batchids = Reddit.data_collection.database_interactions.get_all_batchIds_from_db()
+        return render(request,self.template_name,{'batchids': batchids})
+    
+    def post(self, request):
+        form = HomeForm(request.POST)
+        if form.is_valid():
+            subreddit = form.cleaned_data['subreddit']
+            sort_by = form.cleaned_data['sort_by']
+            limit = form.cleaned_data['limit']
+            Reddit.data_collection.collect_submission_ids(subreddit,sort_by,limit)
+
+        args = {'form': form,'subreddit': subreddit}
+        return render(request, self.template_name, args)
+
+
+
+class TrackDataView(generic.ListView):
+    template_name = 'karmachart/track_data.html'
 
     def get_queryset(self):
         """Return the last five published questions."""
@@ -36,6 +55,11 @@ class IndexView(generic.ListView):
 
         args = {'form': form,'subreddit': subreddit}
         return render(request, self.template_name, args)
+
+
+
+
+
 
 
 

@@ -6,5 +6,7 @@ from . import views
 app_name = 'karmachart'
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
-    url(r'^collect_data',views.collect_data,name='collect_data')
+    path('trackdata', views.TrackDataView.as_view(),name='track_data'),
+    url(r'^$',views.IndexView.as_view(),name='index')
+    # url(r'^collect_data',views.collect_data,name='collect_data')
 ]

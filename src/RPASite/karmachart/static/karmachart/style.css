@@ -5,3 +5,8 @@ li a {
 body {
     background: white url("images/background.gif") no-repeat;
 }
+
+.jumbotron {
+    background: none;
+}
+

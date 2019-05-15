@@ -18,3 +18,8 @@ class Job(models.Model):
     #     return self.pub_date >= timezone.now() - datetime.timedelta(days=1)    
     def __str__(self):
         return self.job_type    
+
+
+
+class Batch(models.Model):
+    batch_id = models.CharField(max_length=200)    

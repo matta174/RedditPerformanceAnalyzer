@@ -11,4 +11,7 @@ class ContactForm(forms.Form):
     cc_myself = forms.BooleanField(required=False)
 
 class HomeForm(forms.Form):
-    post = forms.CharField()
+    subreddit = forms.CharField()
+    sort_by = forms.CharField()
+    limit = forms.IntegerField()
+

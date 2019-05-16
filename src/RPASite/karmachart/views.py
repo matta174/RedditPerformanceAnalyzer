@@ -3,26 +3,30 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 import requests
 from django.views import generic
-from .models import Job
-from .forms import NameForm, HomeForm
+from .models import Job, BatchIds
+from .forms import NameForm, DataForm
 import Reddit.data_collection
 
 
 class IndexView(generic.ListView):
     template_name = 'karmachart/index.html'
     batchids = Reddit.data_collection.database_interactions.get_all_batchIds_from_db()
+    
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return 'testing'
+        return BatchIds.objects.order_by('-pub_date')[:5]
     
+    # def get(self, request):
+    #     form = HomeForm()
+    #     return render(request,self.template_name,{'form': form})
 
     def get_batch_ids(self, request):
         batchids = Reddit.data_collection.database_interactions.get_all_batchIds_from_db()
         return render(request,self.template_name,{'batchids': batchids})
     
     def post(self, request):
-        form = HomeForm(request.POST)
+        form = DataForm(request.POST)
         if form.is_valid():
             subreddit = form.cleaned_data['subreddit']
             sort_by = form.cleaned_data['sort_by']
@@ -34,6 +38,7 @@ class IndexView(generic.ListView):
 
 
 
+
 class TrackDataView(generic.ListView):
     template_name = 'karmachart/track_data.html'
 
@@ -42,11 +47,11 @@ class TrackDataView(generic.ListView):
         return 'testing'
     
     def get(self, request):
-        form = HomeForm()
+        form = DataForm()
         return render(request,self.template_name,{'form': form})
 
     def post(self, request):
-        form = HomeForm(request.POST)
+        form = DataForm(request.POST)
         if form.is_valid():
             subreddit = form.cleaned_data['subreddit']
             sort_by = form.cleaned_data['sort_by']

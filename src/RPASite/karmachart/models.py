@@ -21,5 +21,7 @@ class Job(models.Model):
 
 
 
-class Batch(models.Model):
+class BatchIds(models.Model):
     batch_id = models.CharField(max_length=200)    
+    def __str__(self):
+        return self.batch_id     

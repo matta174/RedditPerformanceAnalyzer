@@ -21,6 +21,6 @@ urlpatterns = [
     path('polls/', include('polls.urls')),
     path('karmachart/',include('karmachart.urls')),
     url(r'^$', include('karmachart.urls')),
-    # path('',include('karmachart.urls')),
+    path('',include('karmachart.urls')),
     path('admin/', admin.site.urls),
 ]

@@ -10,7 +10,7 @@ class ContactForm(forms.Form):
     sender = forms.EmailField()
     cc_myself = forms.BooleanField(required=False)
 
-class HomeForm(forms.Form):
+class DataForm(forms.Form):
     subreddit = forms.CharField()
     sort_by = forms.CharField()
     limit = forms.IntegerField()

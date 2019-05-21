@@ -2,24 +2,30 @@
 {% load static %}
 <html>
 <head>
+        <link rel="shortcut icon" href="images/background.gif" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" type="text/css" href="{% static 'karmachart/style.css' %}">
         <title>karmachart</title>
 </head>
-
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Karmachart</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="{%url 'karmachart:index'%}">Home <span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="{%url 'karmachart:track_data'%}">Track Data</a>
+    </div>
+  </div>
+</nav>
 
     <body>
+
     {% block content  %}
     
     {% endblock content %}
     </body>
-
-    <footer>
-        <p>
-            <a href="{%url 'karmachart:index'%}" class="btn btn-primary btn-lg active"  >Home</a>
-        </p>
-    </footer>
-
-
     
 </html>

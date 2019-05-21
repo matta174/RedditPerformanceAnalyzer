@@ -3,27 +3,29 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 import requests
 from django.views import generic
-from .models import Job, BatchIds
+from .models import Job#, BatchId
 from .forms import NameForm, DataForm
 import Reddit.data_collection
 
 
 class IndexView(generic.ListView):
     template_name = 'karmachart/index.html'
-    batchids = Reddit.data_collection.database_interactions.get_all_batchIds_from_db()
+    # batchid = Reddit.data_collection.database_interactions.get_all_batchIds_from_db()
     
 
     def get_queryset(self):
         """Return the last five published questions."""
-        return BatchIds.objects.order_by('-pub_date')[:5]
+        return"test"
     
     # def get(self, request):
     #     form = HomeForm()
     #     return render(request,self.template_name,{'form': form})
 
     def get_batch_ids(self, request):
-        batchids = Reddit.data_collection.database_interactions.get_all_batchIds_from_db()
-        return render(request,self.template_name,{'batchids': batchids})
+        # batchid = Reddit.data_collection.database_interactions.get_all_batchIds_from_db()
+        batchid = 'test'
+        args = {'batchids': batchid}
+        return render(request,self.template_name,args)
     
     def post(self, request):
         form = DataForm(request.POST)

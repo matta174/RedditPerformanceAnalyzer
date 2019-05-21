@@ -20,12 +20,6 @@ class Job(models.Model):
         return self.job_type    
 
 
-
-# class BatchId(models.Model):
-#     batch_id = models.CharField(max_length=200)    
-#     def __str__(self):
-#         return self.batch_id     
-
 class ProcessQueue(models.Model):
     jobid = models.TextField(db_column='jobId', unique=True)  # Field name made lowercase.
     jobtype = models.TextField(db_column='jobType')  # Field name made lowercase.
@@ -37,8 +31,6 @@ class ProcessQueue(models.Model):
     scheduledtime = models.TextField(db_column='scheduledTime')  # Field name made lowercase.
     status = models.IntegerField()
 
-    class Meta:
-        db_table = 'process_queue'
 
 
 class SubmissionData(models.Model):
@@ -51,9 +43,10 @@ class SubmissionData(models.Model):
     number_8_hour = models.TextField(db_column='8_hour', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
     number_12_hour = models.TextField(db_column='12_hour', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
     number_24_hour = models.TextField(db_column='24_hour', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
+    number_48_hour = models.TextField(db_column='48_hour', blank=True, null=True)  # Field renamed because it wasn't a valid Python identifier.
 
-    class Meta:
-        db_table = 'submission_data'
+
+
 
 
 class Submissions(models.Model):
@@ -62,5 +55,4 @@ class Submissions(models.Model):
     batchid = models.TextField(db_column='BatchId', blank=True, null=True)  # Field name made lowercase.
     create_datetime = models.DateTimeField(blank=True, null=True)
 
-    class Meta:
-        db_table = 'submissions'
+

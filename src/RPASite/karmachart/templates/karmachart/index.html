@@ -14,10 +14,13 @@
         </div>
 
         <div class="text-center" >
+        <h3>
+            Current submissions:
+        </h3>
         
-        {% for batch in batchids %}
+        {% for submission in submissions %}
             <p>
-                {{ batch }}
+                {{ submission.submissionid  }} {{ submission.submissionname }}
             </p>
         {% empty %}
             <p>Nothing to show.</p>

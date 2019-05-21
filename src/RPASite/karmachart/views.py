@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 import requests
 from django.views import generic
-from .models import Job#, BatchId
+from .models import Job, Submissions
 from .forms import NameForm, DataForm
 import Reddit.data_collection
 
@@ -21,10 +21,10 @@ class IndexView(generic.ListView):
     #     form = HomeForm()
     #     return render(request,self.template_name,{'form': form})
 
-    def get_batch_ids(self, request):
+    def get(self, request):
         # batchid = Reddit.data_collection.database_interactions.get_all_batchIds_from_db()
-        batchid = 'test'
-        args = {'batchids': batchid}
+        submissions = Submissions.objects.all()
+        args = {'submissions': submissions}
         return render(request,self.template_name,args)
     
     def post(self, request):

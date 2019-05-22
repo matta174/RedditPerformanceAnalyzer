@@ -1,11 +1,12 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, HttpResponse
 from django.urls import reverse
 import requests
 from django.views import generic
 from .models import Job, Submissions
 from .forms import NameForm, DataForm
 import Reddit.data_collection
+from background_task import background
 
 
 class IndexView(generic.ListView):
@@ -26,6 +27,12 @@ class IndexView(generic.ListView):
         submissions = Submissions.objects.all()
         args = {'submissions': submissions}
         return render(request,self.template_name,args)
+
+
+    @background(schedule=1)
+    def notify_user(self, request):
+        # lookup user by id and send them a message
+        return HttpResponse("Hello world !")
     
     def post(self, request):
         form = DataForm(request.POST)

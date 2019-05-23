@@ -35,10 +35,20 @@ def get_subreddit(sub_id):
     return submission.subreddit
 
 def get_score(sub_id):
-    submission = submission_by_id(sub_id)
+    submission = reddit.submission(id = sub_id)
     return submission.score
 
+
+def get_multi_score(sub_ids):
+    ids2 = [i if i.startswith('t3_') else f't3_{i}' for i in sub_ids]
+    returned_list = []
+    for submission in reddit.info(ids2):
+        returned_list.append(submission.score)
+    return returned_list
+
+
 def get_comment_num(sub_id):
+    
     submission = submission_by_id(sub_id)
     return submission.num_comments
 

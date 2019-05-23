@@ -1,0 +1,49 @@
+{% extends "karmachart/base.html" %}
+{% load static %}
+
+
+{{% block content %}
+
+
+<html>
+    <body>
+
+        <div class="text-center" >
+        <h3>
+            Current submissions:
+        </h3>
+        <br>
+        <br>
+        <br>
+
+
+            <div class="container">
+            <table  class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">Submission Title</th>
+                <th scope="col">Latest Score</th>
+                <th scope="col">Batch ID</th>
+                </tr>
+            </thead>
+                {% for submission in submissions %}
+                <tr>
+                <td>{{ submission.submissionname }}</td>
+                <td> {{ submission.score }}</td>
+                <td>{{ submission.batchid}}</td>
+                </tr>
+                {% empty %}
+                    <p>Nothing to show.</p>
+                {% endfor %}
+            </table>
+            </div>
+
+
+        </div>       
+
+    </body>
+</html>
+
+
+
+{% endblock content %}}

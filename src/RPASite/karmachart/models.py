@@ -50,9 +50,9 @@ class SubmissionData(models.Model):
 
 
 class Submissions(models.Model):
-    submissionid = models.TextField(db_column='SubmissionID', blank=True, null=True)  # Field name made lowercase.
+    submissionid = models.TextField(db_column='SubmissionID', primary_key=True)  # Field name made lowercase.
     submissionname = models.TextField(db_column='SubmissionName', blank=True, null=True)  # Field name made lowercase.
     batchid = models.TextField(db_column='BatchId', blank=True, null=True)  # Field name made lowercase.
-    create_datetime = models.DateTimeField(blank=True, null=True)
+    create_datetime = models.TextField(blank=True, null=True)
 
 

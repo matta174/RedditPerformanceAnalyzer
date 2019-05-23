@@ -11,12 +11,7 @@ import time
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
-    s = schedule.scheduler()
-    collect_thread = Thread(target=collect_data)
-    check_queue_thread = Thread(target=check_queue)
-    
-    check_queue_thread.start() 
-    collect_thread.start()
+
 
     try:
         from django.core.management import execute_from_command_line
@@ -26,7 +21,15 @@ def main():
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
+
+    # s = schedule.scheduler()
+    # collect_thread = Thread(target=collect_data)
+    # check_queue_thread = Thread(target=check_queue)
+    
+    # check_queue_thread.start() 
+    # collect_thread.start()
     execute_from_command_line(sys.argv)
+
 
 
 

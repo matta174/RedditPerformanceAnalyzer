@@ -27,19 +27,6 @@ class IndexView(generic.ListView):
 
         args = {'submissions': submissions}
         return render(request,self.template_name,args)
-    
-    # def post(self, request):
-    #     form = DataForm(request.POST)
-    #     if form.is_valid():
-    #         subreddit = form.cleaned_data['subreddit']
-    #         sort_by = form.cleaned_data['sort_by']
-    #         limit = form.cleaned_data['limit']
-    #         data_collection.collect_submission_ids(subreddit,sort_by,limit)
-
-    #     args = {'form': form,'subreddit': subreddit}
-    #     return render(request, self.template_name, args)
-
-
 
 
 class TrackDataView(generic.ListView):
@@ -78,20 +65,8 @@ class SubmissionsView(generic.ListView):
 
         args = {'submissions': submissions}
         return render(request,self.template_name,args)
+        
     
-    def post(self, request):
-        form = DataForm(request.POST)
-        if form.is_valid():
-            subreddit = form.cleaned_data['subreddit']
-            sort_by = form.cleaned_data['sort_by']
-            limit = form.cleaned_data['limit']
-            data_collection.collect_submission_ids(subreddit,sort_by,limit)
-
-        args = {'form': form,'subreddit': subreddit}
-        return render(request, self.template_name, args)
-
-
-
 
 class SpecificBatchView(generic.ListView):
     template_name = 'karmachart/batch.html'    

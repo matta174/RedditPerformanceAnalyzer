@@ -30,7 +30,7 @@
                 <tr>
                 <td>{{ submission.submissionname }}</td>
                 <td> {{ submission.score }}</td>
-                <td>{{ submission.batchid}}</td>
+                <td><a class="nav-item nav-link" href="{%url 'karmachart:batch'%}">{{ submission.batchid}}</a></td>
                 </tr>
                 {% empty %}
                     <p>Nothing to show.</p>

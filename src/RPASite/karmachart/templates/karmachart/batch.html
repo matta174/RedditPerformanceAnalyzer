@@ -5,15 +5,12 @@
 {{% block content %}
 
         <div class="jumbotron text-center" >
-            sup
+        <h3>
+            All submissions included in batch: {{first.batchid}}
+        <h3>
         </div>
 <html>
     <body>
-
-        <div class="text-center" >
-        <h3>
-            Current submissions:
-        </h3>
         <br>
         <br>
         <br>
@@ -25,14 +22,14 @@
                 <tr>
                 <th scope="col">Submission Title</th>
                 <th scope="col">Latest Score</th>
-                <th scope="col">Batch ID</th>
+                {% comment %} <th scope="col">Batch ID</th> {% endcomment %}
                 </tr>
             </thead>
                 {% for submission in submissions %}
                 <tr>
-                <td>{{ submission.submissionname }}</td>
-                <td> {{ submission.score }}</td>
-                <td>{{ submission.batchid}}</td>
+                <td><h4>{{ submission.submissionname }}</h4></td>
+                <td><h4> {{ submission.score }}</h4></td>
+                {% comment %} <td><h4>{{ submission.batchid}}</h4></td> {% endcomment %}
                 </tr>
                 {% empty %}
                     <p>Nothing to show.</p>

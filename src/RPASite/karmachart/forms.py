@@ -13,5 +13,5 @@ class ContactForm(forms.Form):
 class DataForm(forms.Form):
     subreddit = forms.CharField()
     sort_by = forms.CharField()
-    limit = forms.IntegerField()
+    limit = forms.IntegerField(max_value=50,min_value=1)
 

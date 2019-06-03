@@ -5,28 +5,52 @@ import requests
 from django.views import generic
 from .models import Job, Submissions
 from .forms import NameForm, DataForm
-from Reddit import data_collection, submission_data
+from Reddit import data_collection, submission_data, data_visualization
 from background_task import background
 import datetime, time
+from django.views.generic import TemplateView
+from pygal.style import DarkStyle
+
+from .charts import submissionPieChart
 
 
 
-class IndexView(generic.ListView):
-    template_name = 'karmachart/index.html'
+# class IndexView(generic.ListView):
+#     template_name = 'karmachart/index.html'
     
-    def get(self, request):
-        submissions = Submissions.objects.all()[:10]
-        subids = []
-        for item in submissions:
-            subids.append(item.submissionid)
-        score_list = submission_data.get_multi_score(subids)
-        idx = 0
-        for item in submissions:
-            item.score = score_list[idx]
-            idx += 1
+#     def get(self, request):
+#         # submissions = Submissions.objects.all()[10:]
+#         # subids = []
+#         # for item in submissions:
+#         #     subids.append(item.submissionid)
+#         # score_list = submission_data.get_multi_score(subids)
+#         # idx = 0
+#         # for item in submissions:
+#         #     item.score = score_list[idx]
+#         #     idx += 1
 
-        args = {'submissions': submissions}
-        return render(request,self.template_name,args)
+#         # args = {'submissions': submissions}
+#         return render(request,self.template_name)#,args)
+
+class IndexView(TemplateView):
+    template_name = 'karmachart/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+
+        # Instantiate our chart. We'll keep the size/style/etc.
+        # config here in the view instead of `charts.py`.
+        cht_fruits = submissionPieChart(
+            height=600,
+            width=800,
+            explicit_size=True,
+            style=DarkStyle
+        )
+
+        # Call the `.generate()` method on our chart object
+        # and pass it to template context.
+        context['cht_fruits'] = cht_fruits.generate()
+        return context
 
 
 class TrackDataView(generic.ListView):

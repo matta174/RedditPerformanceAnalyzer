@@ -15,16 +15,17 @@
 
         <div class="text-center" >
         <h3>
-            Current submissions:
+          {{ cht_fruits|safe }}
+            {% comment %} Current submissions: {% endcomment %}
         </h3>
         
-        {% for submission in submissions %}
+        {% comment %} {% for submission in submissions %}
             <p>
                  {{ submission.submissionname }} {{ submission.score }}
             </p>
         {% empty %}
             <p>Nothing to show.</p>
-        {% endfor %}
+        {% endfor %} {% endcomment %}
         </div>
 
         <div class="container text-center">

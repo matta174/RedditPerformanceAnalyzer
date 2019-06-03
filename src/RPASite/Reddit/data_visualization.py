@@ -1,7 +1,8 @@
 import pygal
 from django.views.generic import TemplateView
 from pygal.style import DarkStyle
-import database_interactions, submission_data
+from Reddit import database_interactions, submission_data
+
 
 # bar_chart = pygal.Bar()                                            # Create a bar graph object
 # bar_chart.add('Fibonacci', [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55])  # Add some values
@@ -41,6 +42,7 @@ def create_radar_chart():
     radar_chart.add('Opera', [3472, 2933, 4203, 5229, 5810, 1828, 9013, 4669])
     radar_chart.add('IE', [43, 41, 59, 79, 144, 136, 34, 102])
     radar_chart.render_in_browser()
+
 
 class IndexView(TemplateView):
     template_name = 'index.html'

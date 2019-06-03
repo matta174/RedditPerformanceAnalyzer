@@ -72,8 +72,15 @@ class SpecificBatchView(generic.ListView):
     template_name = 'karmachart/batch.html'    
     
     def get(self, request):
+        currentbatchid = request.GET.get('batchid')
         # cheese_blog = Blog.objects.get(name="Cheddar Talk")
-        submissions = Submissions.objects.filter(batchid = "59ac5921-6493-423e-a80d-edd255aaf498")
+        if not currentbatchid:
+            submissions = Submissions.objects.filter(batchid = "59ac5921-6493-423e-a80d-edd255aaf498")
+        else:
+            # now you have the value of sku
+            # so you can continue with the rest
+            submissions = Submissions.objects.filter(batchid = currentbatchid )
+        #submissions = Submissions.objects.filter(batchid = "59ac5921-6493-423e-a80d-edd255aaf498")
         subids = []
 
         for item in submissions:

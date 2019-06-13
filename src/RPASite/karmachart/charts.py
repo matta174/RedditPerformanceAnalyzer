@@ -15,8 +15,15 @@ class submissionPieChart():
         Query the db for chart data, pack them into a dict and return it.
         '''
         data = {}
+        subids = []
+
+        for item in Submissions.objects.all():
+            subids.append(item.submissionid)
+        score_list = submission_data.get_multi_score(subids)
+        idx = 0
         for submission in Submissions.objects.all():
-            submission.score = submission_data.get_score(submission.submissionid)
+            submission.score = score_list[idx] #submission_data.get_score(submission.submissionid)
+            idx += 1
             data[submission.submissionname] = submission.score
         return data
 

@@ -9,28 +9,10 @@ from Reddit import data_collection, submission_data, data_visualization
 from background_task import background
 import datetime, time
 from django.views.generic import TemplateView
-from pygal.style import DarkStyle
+from pygal.style import DarkStyle, DarkSolarizedStyle
 
-from .charts import submissionPieChart
+from .charts import submissionPieChart, batchPieChart
 
-
-
-# class IndexView(generic.ListView):
-#     template_name = 'karmachart/index.html'
-    
-#     def get(self, request):
-#         # submissions = Submissions.objects.all()[10:]
-#         # subids = []
-#         # for item in submissions:
-#         #     subids.append(item.submissionid)
-#         # score_list = submission_data.get_multi_score(subids)
-#         # idx = 0
-#         # for item in submissions:
-#         #     item.score = score_list[idx]
-#         #     idx += 1
-
-#         # args = {'submissions': submissions}
-#         return render(request,self.template_name)#,args)
 
 class IndexView(TemplateView):
     template_name = 'karmachart/index.html'
@@ -44,7 +26,8 @@ class IndexView(TemplateView):
             height=600,
             width=800,
             explicit_size=True,
-            style=DarkStyle
+            style=DarkStyle,
+            fill = True
         )
 
         # Call the `.generate()` method on our chart object
@@ -93,20 +76,16 @@ class SubmissionsView(generic.ListView):
     
 
 class SpecificBatchView(generic.ListView):
-    template_name = 'karmachart/batch.html'    
-    
+    template_name = 'karmachart/batch.html'            
     def get(self, request):
         currentbatchid = request.GET.get('batchid')
-        # cheese_blog = Blog.objects.get(name="Cheddar Talk")
         if not currentbatchid:
             submissions = Submissions.objects.filter(batchid = "59ac5921-6493-423e-a80d-edd255aaf498")
+            currentbatchid = "59ac5921-6493-423e-a80d-edd255aaf498"
         else:
-            # now you have the value of sku
-            # so you can continue with the rest
             submissions = Submissions.objects.filter(batchid = currentbatchid )
-        #submissions = Submissions.objects.filter(batchid = "59ac5921-6493-423e-a80d-edd255aaf498")
-        subids = []
 
+        subids = []
         for item in submissions:
             subids.append(item.submissionid)
         score_list = submission_data.get_multi_score(subids)
@@ -116,8 +95,19 @@ class SpecificBatchView(generic.ListView):
             item.score = score_list[idx]
             idx += 1
         first = submissions[1]
-        args = {'submissions': submissions, 'first': first}
+        cht_fruits = batchPieChart(
+            currentbatchid,
+            height=600,
+            width=1200,
+            explicit_size=True,
+            style=DarkSolarizedStyle
+             
+        )
+        args = {'submissions': submissions, 'first': first, 'cht_fruits': cht_fruits.generate()}
         return render(request,self.template_name,args)
+
+
+        
     
 
 

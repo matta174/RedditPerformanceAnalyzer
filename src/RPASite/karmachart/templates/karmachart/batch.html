@@ -7,8 +7,24 @@
         <div class="jumbotron text-center" >
         <h3>
             All submissions included in batch: {{first.batchid}}
+            
         <h3>
         </div>
+                {% for batch in batches %}
+                {{ batch.batchid }}
+                                {% empty %}
+                    <p>Nothing to show.</p>
+                {% endfor %}
+
+
+                <form method="POST">
+<select name="item_id">
+{% for batch in batches %}
+    <option value="{{ batch.batchid }}">{{ batch.batchid }}</option>
+{% endfor %}
+</select>
+</form>
+
 <html>
     <body>
         <br>

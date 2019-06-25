@@ -76,7 +76,7 @@ class SubmissionsView(generic.ListView):
     
 
 class SpecificBatchView(generic.ListView):
-    template_name = 'karmachart/batch.html'            
+    template_name = 'karmachart/batch.html'      
     def get(self, request):
         currentbatchid = request.GET.get('batchid')
         if not currentbatchid:
@@ -103,13 +103,14 @@ class SpecificBatchView(generic.ListView):
             style=DarkSolarizedStyle
              
         )
-        args = {'submissions': submissions, 'first': first, 'cht_fruits': cht_fruits.generate()}
+        batches = Submissions.objects.values('batchid').distinct()
+        
+        args = {'submissions': submissions, 'first': first, 'cht_fruits': cht_fruits.generate(),'batches':batches}
         return render(request,self.template_name,args)
 
 
         
     
-
 
 
 

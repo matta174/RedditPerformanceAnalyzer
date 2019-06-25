@@ -1,5 +1,5 @@
 from django import forms
-
+from .models import Job, Submissions
 class NameForm(forms.Form):
     your_name = forms.CharField(label='Your name', max_length=100)
 
@@ -14,4 +14,10 @@ class DataForm(forms.Form):
     subreddit = forms.CharField()
     sort_by = forms.CharField()
     limit = forms.IntegerField(max_value=50,min_value=1)
+
+class SelectBatch(forms.Form):
+    batch = forms.ChoiceField(widget=forms.Select(attrs={'batch': 'form-control'}))
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['batch'].choices= [(batch.batchid) for batch in Submissions.objects.all()]
 

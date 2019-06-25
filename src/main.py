@@ -9,9 +9,9 @@ def main():
     x = True
     while x:
         s = schedule.scheduler()
-        batch_data = database_interactions.select_submissions_by_batchId_from_db('0ce5fcb9-1726-418d-bc7e-912ff128561b')
-        batch_data2 = submission_data.get_batch_data(batch_data)
-        database_interactions.update_value_in_submission_data('1_hour',batch_data2)
+        # batch_data = database_interactions.select_submissions_by_batchId_from_db('0ce5fcb9-1726-418d-bc7e-912ff128561b')
+        # batch_data2 = submission_data.get_batch_data(batch_data)
+        # database_interactions.update_value_in_submission_data('1_hour',batch_data2)
         p = Process(target= data_collection.collect_submission_ids())
         p2 = Process(target = s.schedule_listener())
         p2.start()

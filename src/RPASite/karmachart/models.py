@@ -56,3 +56,7 @@ class Submissions(models.Model):
     create_datetime = models.TextField(blank=True, null=True)
 
 
+class SortMethod(models.Model):
+    sortby = models.TextField(db_column='sortBy', blank=True, null=True)  # Field name made lowercase.
+
+

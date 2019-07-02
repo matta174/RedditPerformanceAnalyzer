@@ -54,6 +54,9 @@ class TrackDataView(generic.ListView):
         args = {'form': form,'subreddit': subreddit}
         return render(request, self.template_name, args)
 
+    def schedule(self,request):
+        return "test"
+
 class SubmissionsView(generic.ListView):
     template_name = 'karmachart/submissions.html'    
     
@@ -107,6 +110,38 @@ class SpecificBatchView(generic.ListView):
         
         args = {'submissions': submissions, 'first': first, 'cht_fruits': cht_fruits.generate(),'batches':batches}
         return render(request,self.template_name,args)
+
+
+    def post(self, request):
+        currentbatchid = request.POST.get('batchid')
+        if not currentbatchid:
+            submissions = Submissions.objects.filter(batchid = "59ac5921-6493-423e-a80d-edd255aaf498")
+            currentbatchid = "59ac5921-6493-423e-a80d-edd255aaf498"
+        else:
+            submissions = Submissions.objects.filter(batchid = currentbatchid )
+
+        subids = []
+        for item in submissions:
+            subids.append(item.submissionid)
+        score_list = submission_data.get_multi_score(subids)
+        idx = 0
+        
+        for item in submissions:
+            item.score = score_list[idx]
+            idx += 1
+        first = submissions[1]
+        cht_fruits = batchPieChart(
+            currentbatchid,
+            height=600,
+            width=1200,
+            explicit_size=True,
+            style=DarkSolarizedStyle
+             
+        )
+        batches = Submissions.objects.values('batchid').distinct()
+        
+        args = {'submissions': submissions, 'first': first, 'cht_fruits': cht_fruits.generate(),'batches':batches}
+        return render(request,self.template_name,args)        
 
 
         

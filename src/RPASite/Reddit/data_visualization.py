@@ -8,15 +8,6 @@ from Reddit import database_interactions, submission_data
 # bar_chart.add('Fibonacci', [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55])  # Add some values
 # bar_chart.render_to_file('src\\Data\\bar_chart.svg')               # Save the svg to a file
 
-test_batchid = database_interactions.select_submissions_by_batchId_from_db('f89d1526-9017-4046-b06c-e4f59c683bb5')
-votecountlist = list()
-for submission in test_batchid:
-    submissionID = submission[0]
-    submission = submission_data.submission_by_id(submission[0])
-    votecount = submission.score
-    votecountlist.insert(0,[submissionID,votecount])
-
-
 def create_bar_chart(batchId = 'f89d1526-9017-4046-b06c-e4f59c683bb5'):
     b_chart = pygal.Bar()
     b_chart.title = "Matt's test bchart"

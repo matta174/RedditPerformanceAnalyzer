@@ -10,20 +10,21 @@
             
         <h3>
         </div>
-                {% for batch in batches %}
-                {{ batch.batchid }}
-                                {% empty %}
-                    <p>Nothing to show.</p>
-                {% endfor %}
 
+                <div class="container text-center" >
+                <h1>Change Batch View</h1>
+                <form action="?batchid=" method="POST">
+                    {% csrf_token %}
+                    <select id="batchid-select" name="batchid">
+                    <option disabled selected> -- select an option -- </option>
+                    {% for i in batches %}
+                    <option value={{i.batchid}}>{{i.batchid}}</option>
+                    {% endfor %}
+                    </select>
+                    <input type="submit" value="Show Batch"/>
+                </form>
+                </div> 
 
-                <form method="POST">
-<select name="item_id">
-{% for batch in batches %}
-    <option value="{{ batch.batchid }}">{{ batch.batchid }}</option>
-{% endfor %}
-</select>
-</form>
 
 <html>
     <body>

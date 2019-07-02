@@ -33,22 +33,22 @@ def main():
 
 
 
-def collect_data():
-    while True:
-        try:
-            data_collection.collect_submission_ids()
-        except:
-            continue
-        time.sleep(60 * 15)
+# def collect_data():
+#     while True:
+#         try:
+#             data_collection.collect_submission_ids()
+#         except:
+#             continue
+#         time.sleep(60 * 15)
 
 
-def check_queue():
-    while True:
-        try:
-            s.check_queue()
-        except:
-            continue
-        time.sleep(15)
+# def check_queue():
+#     while True:
+#         try:
+#             s.check_queue()
+#         except:
+#             continue
+#         time.sleep(15)
 
 
 if __name__ == '__main__':

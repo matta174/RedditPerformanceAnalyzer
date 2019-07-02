@@ -31,7 +31,7 @@
                 <td>{{ submission.submissionname }}</td>
                 <td> {{ submission.score }}</td>
                 <td><a class="nav-item nav-link" href="/batch/?batchid={{submission.batchid}}">{{ submission.batchid}}</a></td>
-                {% comment %} <td><a class="nav-item nav-link" href="{%url 'karmachart:batch'%}">{{ submission.batchid}}</a></td> {% endcomment %}
+                
                 </tr>
                 {% empty %}
                     <p>Nothing to show.</p>

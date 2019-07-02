@@ -55,8 +55,12 @@ class Submissions(models.Model):
     batchid = models.TextField(db_column='BatchId', blank=True, null=True)  # Field name made lowercase.
     create_datetime = models.TextField(blank=True, null=True)
 
-
+choices = (
+    ('top', 'Top'),
+    ('new', 'New'),
+    ('controversial', 'Controversial')
+)
 class SortMethod(models.Model):
-    sortby = models.TextField(db_column='sortBy', blank=True, null=True)  # Field name made lowercase.
+    sortby =models.CharField(max_length=25,choices=choices)# Field name made lowercase.
 
 

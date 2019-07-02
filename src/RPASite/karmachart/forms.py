@@ -1,5 +1,5 @@
 from django import forms
-from .models import Job, Submissions, SortMethod
+from .models import Job, Submissions, SortMethod, choices
 class NameForm(forms.Form):
     your_name = forms.CharField(label='Your name', max_length=100)
 
@@ -12,7 +12,7 @@ class ContactForm(forms.Form):
 
 class DataForm(forms.Form):
     subreddit = forms.CharField()
-    sort_by = forms.ModelChoiceField(queryset = SortMethod.objects.all(), initial=0)
+    sort_by = forms.ChoiceField(choices=choices)
     limit = forms.IntegerField(max_value=50,min_value=1)
 
 class SelectBatch(forms.Form):

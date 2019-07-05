@@ -13,7 +13,7 @@ class ContactForm(forms.Form):
 class DataForm(forms.Form):
     subreddit = forms.CharField()
     sort_by = forms.ChoiceField(choices=choices)
-    limit = forms.IntegerField(max_value=50,min_value=1)
+    limit = forms.IntegerField(max_value=50,min_value=1, initial = 10)
 
 class SelectBatch(forms.Form):
     batch = forms.ChoiceField(widget=forms.Select(attrs={'batch': 'form-control'}))

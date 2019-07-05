@@ -97,7 +97,7 @@ class SpecificBatchView(generic.ListView):
         for item in submissions:
             item.score = score_list[idx]
             idx += 1
-        first = submissions[1]
+        first = submissions[0]
         cht_fruits = batchPieChart(
             currentbatchid,
             height=600,
@@ -129,7 +129,7 @@ class SpecificBatchView(generic.ListView):
         for item in submissions:
             item.score = score_list[idx]
             idx += 1
-        first = submissions[1]
+        first = submissions[0]
         cht_fruits = batchPieChart(
             currentbatchid,
             height=600,

@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render, HttpResponse
+from django.shortcuts import get_object_or_404, render, HttpResponse, redirect
 from django.urls import reverse
 import requests
 from django.views import generic
@@ -32,7 +32,7 @@ class IndexView(TemplateView):
 
         # Call the `.generate()` method on our chart object
         # and pass it to template context.
-        context['cht_fruits'] = cht_fruits.generate()
+        # context['cht_fruits'] = cht_fruits.generate()
         return context
 
 
@@ -49,10 +49,12 @@ class TrackDataView(generic.ListView):
             subreddit = form.cleaned_data['subreddit']
             sort_by = form.cleaned_data['sort_by']
             limit = form.cleaned_data['limit']
-            data_collection.collect_submission_ids(subreddit,sort_by,limit)
+            batchid = data_collection.collect_submission_ids(subreddit,sort_by,limit)
+            
 
         args = {'form': form,'subreddit': subreddit}
-        return render(request, self.template_name, args)
+        return redirect('/batch/?batchid='+ batchid)
+        #return render(request, self.template_name, args)
 
     def schedule(self,request):
         return "test"

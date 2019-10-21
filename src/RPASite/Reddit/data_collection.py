@@ -18,6 +18,7 @@ def collect_submission_ids(designated_subreddit = 'all', sortBy = 'new', lim = 1
             set_submission(submission.id,submission.title,batchid,submission.created)
     database_interactions.insert_multiple_submissions_into_db(submission_dict)
     database_interactions.insert_multiple_submissions_into_submission_data(submission_dict)
+    return batchid
 def get_date(created):
         return dt.datetime.fromtimestamp(created)
 

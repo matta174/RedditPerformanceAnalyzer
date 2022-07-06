@@ -1,6 +1,6 @@
 ﻿praw==6.1.1
 pygal==2.4.0
-lxml==4.6.5
+lxml==4.9.1
 gunicorn == 19.9.0
 Django==2.2.27
 django-background-tasks==1.2.0
